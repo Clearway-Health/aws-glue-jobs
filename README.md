@@ -2,6 +2,76 @@
 
 This guide explains the steps to set up an AWS Glue job triggered by an S3 event, monitored by CloudWatch Events, and sends notifications via SNS when the job state changes.
 
+## Prerequisites
+
+### AWS Services Required
+- AWS Glue
+- AWS Lambda
+- Amazon S3
+- Amazon RDS
+- AWS Secrets Manager
+- Amazon SNS
+
+## IAM Roles and Permissions
+### Glue Specific Permissions:
+- glue:CreateJob
+- glue:StartJobRun
+- glue:GetJob
+- glue:GetJobRun
+- glue:GetJobRuns
+- glue:BatchGetJobs
+- glue:BatchGetPartition
+- glue:BatchGetTable
+  
+#### S3 Permissions:
+- s3:GetObject
+- s3:ListBucket
+- s3:PutObject
+
+#### Secrets Manager Permissions:
+- secretsmanager:GetSecretValue
+- secretsmanager:DescribeSecret
+- RDS Permissions (if needed for other operations beyond database access via JDBC):
+
+### Lambda Specific Permissions:
+
+- lambda:InvokeFunction
+- lambda:CreateFunction
+- lambda:UpdateFunctionCode
+- lambda:GetFunction
+- lambda:UpdateFunctionConfiguration
+- lambda:CreateEventSourceMapping
+- lambda:DeleteEventSourceMapping
+
+### S3 Permissions:
+- s3:GetObject
+- s3:ListBucket
+- s3:PutObject
+- s3:GetBucketNotification
+- s3:PutBucketNotification
+
+### Glue Permissions:
+- glue:StartJobRun
+- glue:GetJobRun
+- glue:GetJobRuns
+- glue:GetJob
+- glue:BatchGetJobs
+- glue:GetJobs
+
+### SNS Permissions:
+- sns:Publish
+
+### CloudWatch Logs Permissions (for logging):
+- logs:CreateLogGroup
+- logs:CreateLogStream
+- logs:PutLogEvents
+- logs:DescribeLogStreams
+
+### CloudWatch Permissions:
+- cloudwatch:PutMetricData
+- cloudwatch:GetMetricData
+- cloudwatch:ListMetrics
+
 ## Glue Scripts
 
 1. The script begins by setting up necessary configurations, including importing libraries and defining functions.
