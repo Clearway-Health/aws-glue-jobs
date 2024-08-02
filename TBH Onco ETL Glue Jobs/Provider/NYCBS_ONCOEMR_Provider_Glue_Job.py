@@ -75,6 +75,10 @@ except ClientError as e:
     
 file_name = os.path.basename(input_file_key)
 
+############################################################################
+######################### Data Transformations Begins ######################
+############################################################################
+
 df = pd.read_csv(StringIO(file_content), delimiter='|', dtype=str)
 
 df['Start Date'] = pd.to_datetime(df['Start Date']).dt.strftime('%m-%d-%Y')
@@ -87,6 +91,10 @@ df['File Name'] = file_name
 
 df = df[['Provider NPI','Provider Last Name','Provider First Name','Degree','Current Status','Department ID','Department Name',
          'Section Name', 'Start Date', 'End Date', 'Specialty', 'File Name', 'Load Timestamp']]
+
+############################################################################
+######################### Data Transformations Ends ########################
+############################################################################
          
 csv_buffer = StringIO()
 df.to_csv(csv_buffer, sep=',', index=False, line_terminator='\n')
